@@ -1,4 +1,10 @@
 
+using MyBookOfRecipes.API.Filters;
+using MyBookOfRecipes.API.Middlewares;
+using MyBookOfRecipes.Application.Mappings.UserMapping;
+using MyBookOfRecipes.Application.Services.UserServices;
+using System.Reflection;
+
 namespace MyBookOfRecipes.API
 {
     public class Program
@@ -9,10 +15,15 @@ namespace MyBookOfRecipes.API
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(options =>
+            {
+                options.Filters.Add<ExceptionFilter>();
+            });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddAutoMapper(typeof(RequestToDomainMapping).Assembly);
+            builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
 
             var app = builder.Build();
 
@@ -27,6 +38,7 @@ namespace MyBookOfRecipes.API
 
             app.UseAuthorization();
 
+            app.UseMiddleware<CultureMiddleware>();
 
             app.MapControllers();
 
