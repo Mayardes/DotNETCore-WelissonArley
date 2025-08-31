@@ -1,4 +1,4 @@
-﻿using MyBookOfRecipes.Application.Exceptions.ExceptionBase;
+﻿using MyBookOfRecipes.Application.Exceptions.Base;
 
 namespace MyBookOfRecipes.Application.Exceptions
 {

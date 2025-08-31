@@ -1,9 +1,7 @@
 ﻿using MyBookOfRecipes.Application.DTO.Request.User.RegisterUser;
 using MyBookOfRecipes.Application.DTO.Response.User.RegisterUser;
 using MyBookOfRecipes.Application.Exceptions;
-using MyBookOfRecipes.Application.Exceptions.ExceptionBase;
 using MyBookOfRecipes.Application.Validators.UserValidator;
-using System.Linq.Expressions;
 
 namespace MyBookOfRecipes.Application.Services.UserServices
 {
@@ -40,8 +38,8 @@ namespace MyBookOfRecipes.Application.Services.UserServices
             if(!result.IsValid)
             {
                 var errorMessage = result.Errors.Select(x => x.ErrorMessage).ToList();
-                //throw new ValidationException(errorMessage);
-                throw new Exception();
+                throw new ValidationException(errorMessage);
+                //throw new Exception();
             }
         }
     }
