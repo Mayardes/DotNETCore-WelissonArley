@@ -1,4 +1,6 @@
 
+using MyBookOfRecipes.API.Middlewares;
+
 namespace MyBookOfRecipes.API
 {
     public class Program
@@ -27,6 +29,7 @@ namespace MyBookOfRecipes.API
 
             app.UseAuthorization();
 
+            app.UseMiddleware<CultureMiddleware>();
 
             app.MapControllers();
 
