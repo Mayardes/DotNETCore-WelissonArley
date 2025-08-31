@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using MyBookOfRecipes.Application.Exceptions;
-using MyBookOfRecipes.Application.Exceptions.ExceptionBase;
+using MyBookOfRecipes.Application.Exceptions.Base;
 
 namespace MyBookOfRecipes.API.Filters
 {

@@ -1,28 +1,31 @@
-﻿using MyBookOfRecipes.Application.DTO.Request.User.RegisterUser;
+﻿using AutoMapper;
+using MyBookOfRecipes.Application.Cryptography;
+using MyBookOfRecipes.Application.DTO.Request.User.RegisterUser;
 using MyBookOfRecipes.Application.DTO.Response.User.RegisterUser;
 using MyBookOfRecipes.Application.Exceptions;
 using MyBookOfRecipes.Application.Validators.UserValidator;
+using MyBookOfRecipes.Domain.Entities;
 
 namespace MyBookOfRecipes.Application.Services.UserServices
 {
-    public class RegisterUserServices
+    public class RegisterUserService(IMapper mapper) : IRegisterUserService
     {
-        public RegisterUserResponseDTO Execute(RegisterUserRequestDTO request)
+        public Task<RegisterUserResponseDTO>RegisterAsync(RegisterUserRequestDTO request)
         {
             //Validate input request
             Validate(request);
 
             //Mapping values to Entity
+            var user = mapper.Map<User>(request);
 
             //Cryptography password
+            user.Password = PasswordEncripter.Encrypt(user.Password);
 
             //Save on Database
 
-            return new RegisterUserResponseDTO()
-            {
-                Id = Guid.NewGuid(),
-                Name = request.Name
-            };
+            var result = mapper.Map<RegisterUserResponseDTO>(user);
+
+            return Task.FromResult(result);
         }
 
         //Library validators avaliables at the moment - 30/08/2025
