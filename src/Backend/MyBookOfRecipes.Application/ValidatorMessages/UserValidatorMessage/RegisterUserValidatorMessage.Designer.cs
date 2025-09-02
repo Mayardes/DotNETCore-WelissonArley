@@ -71,6 +71,15 @@ namespace MyBookOfRecipes.Application.ValidatorMessages.UserValidatorMessage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email deve ter no máximo 100 caracteres..
+        /// </summary>
+        public static string EMAIL_RULE {
+            get {
+                return ResourceManager.GetString("EMAIL_RULE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email deve ser válido..
         /// </summary>
         public static string EMAIL_VALID {
@@ -85,6 +94,15 @@ namespace MyBookOfRecipes.Application.ValidatorMessages.UserValidatorMessage {
         public static string NAME_EMPTY {
             get {
                 return ResourceManager.GetString("NAME_EMPTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nome não pode ser maior que 100 caracteres..
+        /// </summary>
+        public static string NAME_RULE {
+            get {
+                return ResourceManager.GetString("NAME_RULE", resourceCulture);
             }
         }
         

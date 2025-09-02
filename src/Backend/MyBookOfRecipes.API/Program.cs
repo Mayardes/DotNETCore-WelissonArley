@@ -1,8 +1,10 @@
 
+using Microsoft.EntityFrameworkCore;
 using MyBookOfRecipes.API.Filters;
 using MyBookOfRecipes.API.Middlewares;
 using MyBookOfRecipes.Application.Mappings.UserMapping;
 using MyBookOfRecipes.Application.Services.UserServices;
+using MyBookOfRecipes.Infrastructure.Data;
 using System.Reflection;
 
 namespace MyBookOfRecipes.API
@@ -24,6 +26,7 @@ namespace MyBookOfRecipes.API
             builder.Services.AddSwaggerGen();
             builder.Services.AddAutoMapper(typeof(RequestToDomainMapping).Assembly);
             builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
+            builder.Services.AddDbContext<MyBookOfRecipesDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 

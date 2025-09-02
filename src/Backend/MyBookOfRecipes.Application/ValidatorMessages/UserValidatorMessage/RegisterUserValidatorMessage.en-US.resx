@@ -120,11 +120,17 @@
   <data name="EMAIL_EMPTY" xml:space="preserve">
     <value>Email cannot be empty.</value>
   </data>
+  <data name="EMAIL_RULE" xml:space="preserve">
+    <value>Email must be not exceed 100 characters</value>
+  </data>
   <data name="EMAIL_VALID" xml:space="preserve">
     <value>Email invalid.</value>
   </data>
   <data name="NAME_EMPTY" xml:space="preserve">
     <value>Name cannot be empty.</value>
+  </data>
+  <data name="NAME_RULE" xml:space="preserve">
+    <value>Name cannot be greather than 100 characters.</value>
   </data>
   <data name="PASSWORD_EMPTY" xml:space="preserve">
     <value>Password cannot be empty.</value>
