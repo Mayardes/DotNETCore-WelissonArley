@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MyBookOfRecipes.Application.DTO.Response.User.GetUser;
 using MyBookOfRecipes.Application.DTO.Response.User.RegisterUser;
 using MyBookOfRecipes.Domain.Entities;
 
@@ -11,6 +12,8 @@ namespace MyBookOfRecipes.Application.Mappings.UserMapping
             CreateMap<User, RegisterUserResponseDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
+
+            CreateMap<User, GetUserResponseDTO>();
         }
     }
 }

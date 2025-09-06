@@ -2,7 +2,7 @@
 {
     public class Paged
     {
-        public int Size { get; set;}
-        public int Page { get; set;}    
+        public int Size { get; set;} = 10;
+        public int Page { get; set;} = 0;   
     }
 }

@@ -1,11 +1,18 @@
 
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using MyBookOfRecipes.API.Filters;
 using MyBookOfRecipes.API.Middlewares;
+using MyBookOfRecipes.Application.Extensions;
 using MyBookOfRecipes.Application.Mappings.UserMapping;
 using MyBookOfRecipes.Application.Services.UserServices;
+using MyBookOfRecipes.Domain.Repositories.UserRepository;
+using MyBookOfRecipes.Domain.UnitOfWork;
 using MyBookOfRecipes.Infrastructure.Data;
-using System.Reflection;
+using MyBookOfRecipes.Infrastructure.Extensions;
+using MyBookOfRecipes.Infrastructure.Repositories.UserRepository;
+using MyBookOfRecipes.Infrastructure.UnitOfWork;
+using System.Data;
 
 namespace MyBookOfRecipes.API
 {
@@ -21,12 +28,12 @@ namespace MyBookOfRecipes.API
             {
                 options.Filters.Add<ExceptionFilter>();
             });
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddAutoMapper(typeof(RequestToDomainMapping).Assembly);
-            builder.Services.AddScoped<IRegisterUserService, RegisterUserService>();
-            builder.Services.AddDbContext<MyBookOfRecipesDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddApplication();
+            builder.Services.AddInfrastructure(builder.Configuration);
 
             var app = builder.Build();
 

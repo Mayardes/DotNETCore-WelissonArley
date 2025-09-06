@@ -32,9 +32,9 @@ namespace MyBookOfRecipes.API.Filters
         private static void HandleUnknowException(ExceptionContext context)
         {
             context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
-            context.HttpContext.Response.WriteAsJsonAsync(new
+            context.Result = new ObjectResult(new
             {
-                context.Exception.Message
+                message = context.Exception.Message
             });
         }
     }

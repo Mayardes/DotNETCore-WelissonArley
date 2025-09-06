@@ -1,16 +1,20 @@
 ﻿using AutoMapper;
 using MyBookOfRecipes.Application.Cryptography;
+using MyBookOfRecipes.Application.DTO.Request.User.GetUser;
 using MyBookOfRecipes.Application.DTO.Request.User.RegisterUser;
+using MyBookOfRecipes.Application.DTO.Response.User.GetUser;
 using MyBookOfRecipes.Application.DTO.Response.User.RegisterUser;
 using MyBookOfRecipes.Application.Exceptions;
 using MyBookOfRecipes.Application.Validators.UserValidator;
 using MyBookOfRecipes.Domain.Entities;
+using MyBookOfRecipes.Domain.Repositories.UserRepository;
+using MyBookOfRecipes.Domain.UnitOfWork;
 
 namespace MyBookOfRecipes.Application.Services.UserServices
 {
-    public class RegisterUserService(IMapper mapper) : IRegisterUserService
+    public class RegisterUserService(IMapper mapper, IUserWriteRepository repository, IUserReadOnlyRepository readRepository, IUnitOfWork unitOfWork) : IRegisterUserService
     {
-        public Task<RegisterUserResponseDTO>RegisterAsync(RegisterUserRequestDTO request)
+        public async Task<RegisterUserResponseDTO>RegisterAsync(RegisterUserRequestDTO request)
         {
             //Validate input request
             Validate(request);
@@ -22,10 +26,12 @@ namespace MyBookOfRecipes.Application.Services.UserServices
             user.Password = PasswordEncripter.Encrypt(user.Password);
 
             //Save on Database
+            await repository.CreateAsync(user);
+            await unitOfWork.CommitAsyc();
 
             var result = mapper.Map<RegisterUserResponseDTO>(user);
 
-            return Task.FromResult(result);
+            return result;
         }
 
         //Library validators avaliables at the moment - 30/08/2025
@@ -44,6 +50,15 @@ namespace MyBookOfRecipes.Application.Services.UserServices
                 throw new ValidationException(errorMessage);
                 //throw new Exception();
             }
+        }
+
+        public async Task<IEnumerable<GetUserResponseDTO>> GetUserAsync(GetUserRequestDTO request)
+        {
+            var result = await readRepository.GetAsync(request);
+
+            var response = mapper.Map<IEnumerable<GetUserResponseDTO>>(result);
+
+            return response;
         }
     }
 }
