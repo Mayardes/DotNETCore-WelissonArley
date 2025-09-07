@@ -71,6 +71,15 @@ namespace MyBookOfRecipes.Application.ValidatorMessages.UserValidatorMessage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email já cadastrado..
+        /// </summary>
+        public static string EMAIL_EXISTIS {
+            get {
+                return ResourceManager.GetString("EMAIL_EXISTIS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email deve ter no máximo 100 caracteres..
         /// </summary>
         public static string EMAIL_RULE {

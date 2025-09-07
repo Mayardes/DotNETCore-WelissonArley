@@ -6,6 +6,7 @@ using MyBookOfRecipes.Application.DTO.Request.User.RegisterUser;
 using MyBookOfRecipes.Application.DTO.Response.User.GetUser;
 using MyBookOfRecipes.Application.DTO.Response.User.RegisterUser;
 using MyBookOfRecipes.Application.Exceptions;
+using MyBookOfRecipes.Application.ValidatorMessages.UserValidatorMessage;
 using MyBookOfRecipes.Application.Validators.UserValidator;
 using MyBookOfRecipes.Domain.Entities;
 using MyBookOfRecipes.Domain.Repositories.UserRepository;
@@ -18,8 +19,11 @@ namespace MyBookOfRecipes.Application.Services.UserServices
         private readonly EncripterConfig _encripterOption = encripterOption.Value;
         public async Task<RegisterUserResponseDTO>RegisterAsync(RegisterUserRequestDTO request)
         {
+            //Validação de negócio
+            var isEmailExists = await readRepository.IsExistActiveUserWithEmail(request.Email);
+
             //Validate input request
-            Validate(request);
+            Validate(request, isEmailExists);
 
             //Mapping values to Entity
             var user = mapper.Map<User>(request);
@@ -41,12 +45,20 @@ namespace MyBookOfRecipes.Application.Services.UserServices
         //2.Fluent Validation - But does not have support anymore, more simples to use.
         //3.Validot - has high performace.
         //4.CSLA.NET - indicate for business more complex, with validation  tightly coupled to logic.
-        public static void Validate(RegisterUserRequestDTO request)
+        public static void Validate(RegisterUserRequestDTO request, bool isEmailExists)
         {
             var validator = new RegisterUserValidator();
             var result = validator.Validate(request);
-            
-            if(!result.IsValid)
+
+            if(isEmailExists)
+            {
+                result.Errors.Add(new FluentValidation.Results.ValidationFailure { ErrorMessage = RegisterUserValidatorMessage.EMAIL_EXISTIS });
+                var errorMessage = result.Errors.Select(x => x.ErrorMessage).ToList();
+                throw new ValidationException(errorMessage);
+            }
+
+
+            if (!result.IsValid)
             {
                 var errorMessage = result.Errors.Select(x => x.ErrorMessage).ToList();
                 throw new ValidationException(errorMessage);

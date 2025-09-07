@@ -120,6 +120,9 @@
   <data name="EMAIL_EMPTY" xml:space="preserve">
     <value>Email não poder ser vazio.</value>
   </data>
+  <data name="EMAIL_EXISTIS" xml:space="preserve">
+    <value>Email já cadastrado.</value>
+  </data>
   <data name="EMAIL_RULE" xml:space="preserve">
     <value>Email deve ter no máximo 100 caracteres.</value>
   </data>
