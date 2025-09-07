@@ -13,6 +13,7 @@ namespace MyBookOfRecipes.Infrastructure.Configurations
             builder.Property(x => x.Name).HasColumnType("VARCHAR").HasMaxLength(100).IsRequired();
             builder.Property(x => x.Email).HasColumnType("VARCHAR").HasMaxLength(100).IsRequired();
             builder.Property(x => x.Password).HasColumnType("VARCHAR").HasMaxLength(1000).IsRequired();
+
         }
     }
 }
