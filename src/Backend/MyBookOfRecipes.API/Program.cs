@@ -1,19 +1,8 @@
-
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
 using MyBookOfRecipes.API.Filters;
 using MyBookOfRecipes.API.Middlewares;
 using MyBookOfRecipes.Application.Cryptography;
 using MyBookOfRecipes.Application.Extensions;
-using MyBookOfRecipes.Application.Mappings.UserMapping;
-using MyBookOfRecipes.Application.Services.UserServices;
-using MyBookOfRecipes.Domain.Repositories.UserRepository;
-using MyBookOfRecipes.Domain.UnitOfWork;
-using MyBookOfRecipes.Infrastructure.Data;
 using MyBookOfRecipes.Infrastructure.Extensions;
-using MyBookOfRecipes.Infrastructure.Repositories.UserRepository;
-using MyBookOfRecipes.Infrastructure.UnitOfWork;
-using System.Data;
 
 namespace MyBookOfRecipes.API
 {
