@@ -5,10 +5,9 @@ namespace MyBookOfRecipes.Application.Cryptography
 {
     public class PasswordEncripter
     {
-        public static string Encrypt(string password)
+        public static string Encrypt(string password, string additionalKey)
         {
-            var chaveAdicional = "ABC";
-            var newPassword = $"{password}" + $"{chaveAdicional}";
+            var newPassword = $"{password}" + $"{additionalKey}";
 
             var bytes = Encoding.UTF8.GetBytes(newPassword);
             var hashBytes = SHA512.HashData(bytes);

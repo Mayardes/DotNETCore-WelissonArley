@@ -3,6 +3,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using MyBookOfRecipes.API.Filters;
 using MyBookOfRecipes.API.Middlewares;
+using MyBookOfRecipes.Application.Cryptography;
 using MyBookOfRecipes.Application.Extensions;
 using MyBookOfRecipes.Application.Mappings.UserMapping;
 using MyBookOfRecipes.Application.Services.UserServices;
@@ -34,6 +35,7 @@ namespace MyBookOfRecipes.API
             builder.Services.AddSwaggerGen();
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
+            builder.Services.AddOptions<EncripterConfig>().Bind(builder.Configuration.GetSection("EncripterConfig"));
 
             var app = builder.Build();
 

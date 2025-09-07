@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Options;
 using MyBookOfRecipes.Application.Cryptography;
 using MyBookOfRecipes.Application.DTO.Request.User.GetUser;
 using MyBookOfRecipes.Application.DTO.Request.User.RegisterUser;
@@ -12,8 +13,9 @@ using MyBookOfRecipes.Domain.UnitOfWork;
 
 namespace MyBookOfRecipes.Application.Services.UserServices
 {
-    public class RegisterUserService(IMapper mapper, IUserWriteRepository repository, IUserReadOnlyRepository readRepository, IUnitOfWork unitOfWork) : IRegisterUserService
+    public class RegisterUserService(IMapper mapper, IUserWriteRepository repository, IUserReadOnlyRepository readRepository, IUnitOfWork unitOfWork, IOptions<EncripterConfig> encripterOption) : IRegisterUserService
     {
+        private readonly EncripterConfig _encripterOption = encripterOption.Value;
         public async Task<RegisterUserResponseDTO>RegisterAsync(RegisterUserRequestDTO request)
         {
             //Validate input request
@@ -23,7 +25,7 @@ namespace MyBookOfRecipes.Application.Services.UserServices
             var user = mapper.Map<User>(request);
 
             //Cryptography password
-            user.Password = PasswordEncripter.Encrypt(user.Password);
+            user.Password = PasswordEncripter.Encrypt(user.Password, _encripterOption.Key);
 
             //Save on Database
             await repository.CreateAsync(user);
