@@ -1,6 +1,8 @@
 ﻿using Bogus;
 using CommonTestUtilities.Requests.User;
+using FluentAssertions;
 using MyBookOfRecipes.Application.Validators.UserValidator;
+using Shouldly;
 
 namespace Validation.Tests.User.Register
 {
@@ -14,10 +16,16 @@ namespace Validation.Tests.User.Register
 
             //Act
             var request = RegisterUserRequestBuilder.Builder();
+            
             var result = validator.Validate(request);
 
+            /*SHOULDLY*/
+            result.ShouldNotBeNull();
+            result.IsValid.ShouldBeTrue();
+
+            /*FLUENT ASSERTIONS*/
             //Assert
-            Assert.True(result.IsValid);
+            //result.IsValid.Should().BeTrue();
         }
     }
 }

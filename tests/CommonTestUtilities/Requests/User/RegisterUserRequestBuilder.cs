@@ -12,12 +12,7 @@ namespace CommonTestUtilities.Requests.User
                 .RuleFor(x => x.Email, (f, x) => f.Internet.Email(x.Name))
                 .RuleFor(x => x.Password, (f) => f.Internet.Password());
 
-            return new RegisterUserRequestDTO
-            {
-                Email = "mayardesoliveira@gmail.com",
-                Name = "Mayardes Oliveira",
-                Password = "356678240"
-            };
+            return faker;
         }
     }
 }
