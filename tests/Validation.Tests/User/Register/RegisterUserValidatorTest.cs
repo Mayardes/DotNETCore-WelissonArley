@@ -1,6 +1,6 @@
-﻿using Bogus;
-using CommonTestUtilities.Requests.User;
+﻿using CommonTestUtilities.Requests.User;
 using FluentAssertions;
+using MyBookOfRecipes.Application.ValidatorMessages.UserValidatorMessage;
 using MyBookOfRecipes.Application.Validators.UserValidator;
 using Shouldly;
 
@@ -26,6 +26,76 @@ namespace Validation.Tests.User.Register
             /*FLUENT ASSERTIONS*/
             //Assert
             //result.IsValid.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Error_Name_Empty()
+        {   
+            //Arrange
+            var validator = new RegisterUserValidator();
+
+            //Act
+            var request = RegisterUserRequestBuilder.Builder();
+            request.Name = string.Empty;
+
+            var result = validator.Validate(request);
+
+            //Assert
+            result.IsValid.ShouldBeFalse();
+            result.Errors.Should().ContainSingle().And.Contain(e => e.ErrorMessage.Equals(RegisterUserValidatorMessage.NAME_EMPTY));
+        }
+
+        [Fact]
+        public void Error_Email_Empty()
+        {
+            //Arrange
+            var validator = new RegisterUserValidator();
+
+            //Act
+            var request = RegisterUserRequestBuilder.Builder();
+            request.Email = string.Empty;
+
+            var result = validator.Validate(request);
+
+            //Assert
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().ContainSingle().And.Contain(e => e.ErrorMessage.Equals(RegisterUserValidatorMessage.EMAIL_EMPTY));
+        }
+
+        [Fact]
+        public void Error_Email_Invalid()
+        {
+            //Arrange
+            var validator = new RegisterUserValidator();
+
+            //Act
+            var request = RegisterUserRequestBuilder.Builder();
+            request.Email = "mayardes.oliveira.com.br"; //Example invalid email
+            var result = validator.Validate(request);
+
+            //Assert
+            result.IsValid.Should().BeFalse();
+            result.Errors.Should().ContainSingle().And.Contain(error => error.ErrorMessage.Equals(RegisterUserValidatorMessage.EMAIL_VALID));
+        }
+
+        [Theory]
+        [InlineData(2)]
+        [InlineData(5)]
+        [InlineData(3)]
+        [InlineData(1)]
+        [InlineData(4)]
+        public void Error_Password_Invalid(int passwordLength)
+        {
+            //Assert
+            var validator = new RegisterUserValidator();
+
+            //Act
+            var request = RegisterUserRequestBuilder.Builder(passwordLength);
+
+            var result = validator.Validate(request);
+
+            //Assert
+            result.IsValid.Should().BeFalse();
         }
     }
 }
