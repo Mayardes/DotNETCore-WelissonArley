@@ -15,7 +15,7 @@ namespace Validation.Tests.User.Register
             var validator = new RegisterUserValidator();
 
             //Act
-            var request = RegisterUserRequestBuilder.Builder();
+            var request = RegisterUserRequestBuilder.Build();
             
             var result = validator.Validate(request);
 
@@ -35,7 +35,7 @@ namespace Validation.Tests.User.Register
             var validator = new RegisterUserValidator();
 
             //Act
-            var request = RegisterUserRequestBuilder.Builder();
+            var request = RegisterUserRequestBuilder.Build();
             request.Name = string.Empty;
 
             var result = validator.Validate(request);
@@ -52,7 +52,7 @@ namespace Validation.Tests.User.Register
             var validator = new RegisterUserValidator();
 
             //Act
-            var request = RegisterUserRequestBuilder.Builder();
+            var request = RegisterUserRequestBuilder.Build();
             request.Email = string.Empty;
 
             var result = validator.Validate(request);
@@ -69,7 +69,7 @@ namespace Validation.Tests.User.Register
             var validator = new RegisterUserValidator();
 
             //Act
-            var request = RegisterUserRequestBuilder.Builder();
+            var request = RegisterUserRequestBuilder.Build();
             request.Email = "mayardes.oliveira.com.br"; //Example invalid email
             var result = validator.Validate(request);
 
@@ -90,7 +90,7 @@ namespace Validation.Tests.User.Register
             var validator = new RegisterUserValidator();
 
             //Act
-            var request = RegisterUserRequestBuilder.Builder(passwordLength);
+            var request = RegisterUserRequestBuilder.Build(passwordLength);
 
             var result = validator.Validate(request);
 

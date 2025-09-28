@@ -8,10 +8,26 @@
 
   <ItemGroup>
     <PackageReference Include="Bogus" Version="35.6.3" />
+    <PackageReference Include="Moq" Version="4.20.72" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Backend\MyBookOfRecipes.Application\MyBookOfRecipes.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Cryptography\**" />
+    <Compile Remove="Criptography\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Cryptography\**" />
+    <EmbeddedResource Remove="Criptography\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Cryptography\**" />
+    <None Remove="Criptography\**" />
   </ItemGroup>
 
 </Project>
