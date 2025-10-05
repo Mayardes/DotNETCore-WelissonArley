@@ -19,25 +19,32 @@ namespace MyBookOfRecipes.Application.Services.UserServices
         private readonly EncripterConfig _encripterOption = encripterOption.Value;
         public async Task<RegisterUserResponseDTO>RegisterAsync(RegisterUserRequestDTO request)
         {
-            //Validação de negócio
-            var isEmailExists = await readRepository.IsExistActiveUserWithEmail(request.Email);
+            try
+            {
+                //Validação de negócio
+                var isEmailExists = await readRepository.IsExistActiveUserWithEmail(request.Email);
 
-            //Validate input request
-            Validate(request, isEmailExists);
+                //Validate input request
+                Validate(request, isEmailExists);
 
-            //Mapping values to Entity
-            var user = mapper.Map<User>(request);
+                //Mapping values to Entity
+                var user = mapper.Map<User>(request);
 
-            //Cryptography password
-            user.Password = PasswordEncripter.Encrypt(user.Password, _encripterOption.Key);
+                //Cryptography password
+                user.Password = PasswordEncripter.Encrypt(user.Password, _encripterOption.Key);
 
-            //Save on Database
-            await repository.CreateAsync(user);
-            await unitOfWork.CommitAsyc();
+                //Save on Database
+                await repository.CreateAsync(user);
+                await unitOfWork.CommitAsyc();
 
-            var result = mapper.Map<RegisterUserResponseDTO>(user);
+                var result = mapper.Map<RegisterUserResponseDTO>(user);
 
-            return result;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         //Library validators avaliables at the moment - 30/08/2025
